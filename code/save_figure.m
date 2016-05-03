@@ -1,7 +1,13 @@
 function save_figure(name,h,direc)
 % save_figure(figure_name,handel,directory)
 
-directory = '~/Desktop/CS289A/rl-maze/figures/';
+host = char(getHostName(java.net.InetAddress.getLocalHost));
+if strcmp(host(1:4),'Paul')
+    directory = '~/Desktop/CS289A/rl-maze/figures/';
+else
+    directory = 'DYLANPATH/rl-maze/figures/';
+end
+
 if nargin > 2
     directory = [directory, direc, '/'];
 end

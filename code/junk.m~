@@ -28,21 +28,21 @@ imagesc(V(mat))
 
 policy_mat = policy(mat)
 
-figure
-subplot(2,2,1)
-pr = pseudoreward_matrix(:,1);
-image(pr(mat))
-subplot(2,2,2)
-pr = pseudoreward_matrix(:,2);
-image(pr(mat))
-subplot(2,2,3)
-pr = pseudoreward_matrix(:,3);
-image(pr(mat))
-subplot(2,2,4)
-pr = pseudoreward_matrix(:,4);
-image(pr(mat))
-
-qw=V(mat);
+% figure
+% subplot(2,2,1)
+% pr = pseudoreward_matrix(:,1);
+% image(pr(mat))
+% subplot(2,2,2)
+% pr = pseudoreward_matrix(:,2);
+% image(pr(mat))
+% subplot(2,2,3)
+% pr = pseudoreward_matrix(:,3);
+% image(pr(mat))
+% subplot(2,2,4)
+% pr = pseudoreward_matrix(:,4);
+% image(pr(mat))
+% 
+% qw=V(mat);
 
 
 %%
@@ -99,31 +99,6 @@ figure, imagesc(qw)
 %%
 
 
-
-
-
-
-% function show_maze(row, col, rr, cc, ptr_left, ptr_up, ptr_right, ptr_down,h)
-% figure(h)
-% line([.5,col+.5],[.5,.5]) % draw top border
-% line([.5,col+.5],[row+.5,row+.5]) % draw bottom border
-% line([.5,.5],[1.5,row+.5]) % draw left border
-% line([col+.5,col+.5],[.5,row-.5])  % draw right border
-mm = zeros(10,15);
-for ii=1:length(ptr_right)
-    if ptr_right(ii)>0 % right passage blocked
-        mm(cc(ii),rr(ii)) = 1;
-%         line([cc(ii)+.5,cc(ii)+.5],[rr(ii)-.5,rr(ii)+.5]);
-%         hold on
-    end
-    if ptr_down(ii)>0 % down passage blocked
-        line([cc(ii)-.5,cc(ii)+.5],[rr(ii)+.5,rr(ii)+.5]);
-%         hold on
-    end
-    
+while 1
+    m3=makeMazeModified(6);figure,imagesc(m3)
 end
-% axis equal
-% axis([.5,col+.5,.5,row+.5])
-% axis off
-% set(gca,'YDir','reverse')
-% return

@@ -40,12 +40,12 @@ switch which_maze
         
     case 'big'        
         
-        nrows = 19;
-        ncols = 19;
+        nrows = 11;
+        ncols = 11;
         maze = nan;
         
-        reward_landscape = zeros(19,19);
-        reward_landscape(19,19) = 1;
+        reward_landscape = zeros(11,11);
+        reward_landscape(11,11) = 1;
         
     otherwise
         error('unrecognized maze type')

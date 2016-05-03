@@ -98,32 +98,11 @@ figure, imagesc(qw)
 
 %%
 
-
-
-
-
-
-% function show_maze(row, col, rr, cc, ptr_left, ptr_up, ptr_right, ptr_down,h)
-% figure(h)
-% line([.5,col+.5],[.5,.5]) % draw top border
-% line([.5,col+.5],[row+.5,row+.5]) % draw bottom border
-% line([.5,.5],[1.5,row+.5]) % draw left border
-% line([col+.5,col+.5],[.5,row-.5])  % draw right border
-mm = zeros(10,15);
-for ii=1:length(ptr_right)
-    if ptr_right(ii)>0 % right passage blocked
-        mm(cc(ii),rr(ii)) = 1;
-%         line([cc(ii)+.5,cc(ii)+.5],[rr(ii)-.5,rr(ii)+.5]);
-%         hold on
-    end
-    if ptr_down(ii)>0 % down passage blocked
-        line([cc(ii)-.5,cc(ii)+.5],[rr(ii)+.5,rr(ii)+.5]);
-%         hold on
-    end
-    
+x=[];
+figure;
+while isempty(x)
+    m3=makeMazeModified(6);
+    imagesc(m3)
+    x=input('hi');
+    figure(gcf)
 end
-% axis equal
-% axis([.5,col+.5,.5,row+.5])
-% axis off
-% set(gca,'YDir','reverse')
-% return

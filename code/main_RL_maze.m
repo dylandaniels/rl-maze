@@ -1,4 +1,15 @@
-addpath(genpath('~/Desktop/CS289A/rl-maze/code/'))
+clear all;
+
+host = char(getHostName(java.net.InetAddress.getLocalHost));
+if strcmp(host(1:4),'Paul')
+    addpath(genpath('~/Desktop/CS289A/rl-maze/code/'))
+else
+    addpath(genpath('DYLANPATH/rl-maze/code/'))
+end
+
+nSims = 1;
+which_learning_process = 3; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
+grafica     = true; % indicates if display the graphical interface
 
 which_maze = 'big';
 switch which_maze
@@ -17,11 +28,18 @@ switch which_maze
         
     case 'big'
         
-        [maze, N, M, reward_landscape]  = CreateMaze(which_maze);
+        [~, ~, ~, reward_landscape]  = CreateMaze(which_maze);
         load 11maze.mat
         start = start_m;
         goal = goal_m;
         maze = m;
+%         maze_plot = rot90(m,3);
+%         maze = rot90(m,3);
+        M = size(maze,1);
+        N = size(maze,2);
+        if ~all(size(reward_landscape)==size(m))
+            error('reward landscape wrong size-- fix CreateMaze')
+        end
         
 end
 
@@ -45,6 +63,8 @@ gamma       = 0.95;  % discount factor
 epsilon     = 0.1;   % probability of a random action selection
 
 
-grafica     = true; % indicates if display the graphical interface
 xpoints=[];
 ypoints=[];
+
+% Run it!
+pseudoreward_maze

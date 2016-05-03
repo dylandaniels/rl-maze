@@ -29,8 +29,7 @@ text(start(1)+0.3,start(2)+0.5,'S','FontName','Courier New');
 text(goal(1)+0.3,goal(2)+0.5,'G','FontName','Courier New');
 
 % [mx my] = find(maze);
-% [mx my] = find(rot90(maze,3));
-[my, mx] = find(flipud(maze));
+% [my, mx] = find(maze);
 plot(mx-0.5,my-0.5,'s','MarkerEdgeColor',[.5 .5 .5],'MarkerFaceColor',[.5 .5 .5],'MarkerSize',20);
 drawnow
 hold off

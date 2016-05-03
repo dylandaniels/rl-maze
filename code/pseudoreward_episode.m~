@@ -1,4 +1,4 @@
-function [ total_reward,steps,Q ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape)
+function [ total_reward,steps,Q ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape,maze_plot)
 % maxstepts: the maximum number of steps per episode
 % Q: the current QTable
 % alpha: the current learning rate
