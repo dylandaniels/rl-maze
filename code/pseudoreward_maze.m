@@ -22,6 +22,8 @@ end
 simulation_data.steps = nan(maxepisodes,nSims,4);
 simulation_data.reward = nan(maxepisodes,nSims,4);
 
+sq= [];
+
 for learning_process = which_learning_process
     disp(['Learning process ',num2str(learning_process)])
     switch learning_process
@@ -50,29 +52,15 @@ for learning_process = which_learning_process
         for i=1:maxepisodes
             
             
-            [total_reward,steps,Q ] =  pseudoreward_episode(maxsteps, Q, Model,...
+            [total_reward,steps,Q, sq ] =  pseudoreward_episode(maxsteps, Q, Model,...
                 alpha, gamma, epsilon, statelist, actionlist,...
-                grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i) ;
+                grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i, sq) ;
             
             simulation_data.steps(i,simulation,learning_process) = steps;
             simulation_data.reward(i,simulation,learning_process) = total_reward;
             
             
             if grafica
-                
-                disp(['Espisode: ',int2str(i),'  Steps:', int2str(steps),'  Reward:',...
-                    num2str(total_reward), ' epsilon: ' ,num2str(epsilon)])
-                
-                
-                xpoints(i)=i-1;
-                ypoints(i)=steps;
-                subplot(2,1,2);
-                plot(xpoints,ypoints)
-                title(['Episode: ',int2str(i),' epsilon: ',num2str(epsilon)])
-                
-                
-                drawnow
-
                 if (i>2000000)
                     grafica=true;
                 end

@@ -1,4 +1,4 @@
-function [ total_reward,steps,Q ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape,ep)
+function [ total_reward,steps,Q, sq ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape,ep,sq)
 % maxstepts: the maximum number of steps per episode
 % Q: the current QTable
 % alpha: the current learning rate
@@ -65,11 +65,15 @@ for i=1:maxsteps
     
     % Plot of the mountain car problem
     if (grafic==true)
-        if ep == 1 && i ==1
+        if ep == 1 && i == 1
             Plot( x,a,steps,maze,start,goal,['Pseudo-reward Learning']);
             hold on
             sq = [];
         end
+        if i == 1
+            subplot(2,1,1);
+        end
+        pause(.005)
         delete(sq)
         sq = plot(x(1)+0.5,x(2)+0.5,'sk','MarkerFaceColor','k','MarkerSize',10);
     end
@@ -80,5 +84,16 @@ for i=1:maxsteps
     end
 end
 
+if (grafic==true)
+    disp(['Espisode: ',int2str(ep),'  Steps:', int2str(steps),'  Reward:',...
+        num2str(total_reward), ' epsilon: ' ,num2str(epsilon)])
+    
+    xpoints(ep)=ep-1;
+    ypoints(ep)=steps;
+    subplot(2,1,2);
+    plot(xpoints,ypoints)
+    title(['Episode: ',int2str(i),' epsilon: ',num2str(epsilon)])
+
+    drawnow
 end
 

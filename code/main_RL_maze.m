@@ -10,9 +10,9 @@ end
 nSims = 1;
 which_learning_process = 2; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
 
+
 % Only necessary if which_learning_process == 2
 which_pseudoreward = 'optimal_policy';
-
 
 grafica     = true; % indicates if display the graphical interface
 
