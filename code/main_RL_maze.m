@@ -8,7 +8,7 @@ else
 end
 
 nSims = 1;
-which_learning_process = 3; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
+which_learning_process = 2; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
 grafica     = true; % indicates if display the graphical interface
 
 which_maze = 'big';
