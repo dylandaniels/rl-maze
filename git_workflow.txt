@@ -1,0 +1,8 @@
+Workflow
+--------
+
+1) git pull
+2) make code changes
+3) git add <files>
+4) git commit (add commit message in vim, type ":wq")
+5) git push origin master
