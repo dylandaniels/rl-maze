@@ -1,17 +1,22 @@
-
-% Set shaping function
-[transition_matrix, reward_matrix] = ...
-    get_transitionAndReward_matrices(statelist,actionlist,maze,M,N,start,goal,reward_landscape);
-% first row of transition matrix (state 1) corresponds to position "start";
-% all subsequent states (rows of transition matrix) procede bottom to top
-% and left to right through the maze, then wrap back to [0 0] and proceed
-% back to "start"
-
-[V, policy, cpu_time] = mdp_LP(transition_matrix, reward_matrix, gamma);
-
-% pseudorewards = get_pseudoreward_matrix(V,policy,transition_matrix,gamma);
-
-shaping = V;
+switch which_pseudoreward
+    % shaping function is the optimal policy as found by mdp LP
+    case 'optimal_policy'
+        [transition_matrix, reward_matrix] = ...
+            get_transitionAndReward_matrices(statelist,actionlist,maze,...
+                                             M,N,start,goal,...
+                                             reward_landscape);
+                                         
+        [V, policy, cpu_time] = mdp_LP(transition_matrix, reward_matrix,...
+                                       gamma);
+                                   
+        shaping = V;
+    case 'manhattan'
+        shaping = manhattan_dist(maze, goal, gamma);
+    case 'optimal_policy_noisy'
+        
+    case 'manhattan_noisy'
+        
+end
 % shaping = pseudorewards;
 
 simulation_data.steps = nan(maxepisodes,nSims,4);
@@ -33,7 +38,7 @@ for learning_process = which_learning_process
             opts.pseudorewards = true;
             opts.planning = true;
     end
-    
+        
     for simulation = 1:nSims
         if ~rem(simulation,10)
             disp(['Sim ',num2str(simulation)])

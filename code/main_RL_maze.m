@@ -4,11 +4,16 @@ host = char(getHostName(java.net.InetAddress.getLocalHost));
 if strcmp(host(1:4),'Paul')
     addpath(genpath('~/Desktop/CS289A/rl-maze/code/'))
 else
-    addpath(genpath('DYLANPATH/rl-maze/code/'))
+    addpath(genpath('~/cs289/rl-maze/code/'))
 end
 
 nSims = 1;
-which_learning_process = 3; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
+which_learning_process = 2; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
+
+% Only necessary if which_learning_process == 2
+which_pseudoreward = 'optimal_policy';
+
+
 grafica     = true; % indicates if display the graphical interface
 
 which_maze = 'big';
@@ -50,8 +55,8 @@ nstates     = size(statelist,1);
 nactions    = size(actionlist,1);
 
 %Generate initial Population
-Q           = BuildQTable(nstates,nactions ); % the Qtable  
-Model       = BuildModel(nstates,nactions ); % the Qtable   
+Q           = BuildQTable(nstates, nactions); % the Qtable  
+Model       = BuildModel(nstates, nactions); % the Qtable   
 
 % planning steps
 p_steps     = 10;

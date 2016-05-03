@@ -7,6 +7,11 @@ function [transition_matrix, reward_matrix] = get_transitionAndReward_matrices(s
 % M: number of rows in maze
 % N: number of columns in maze
 
+% first row of transition matrix (state 1) corresponds to position "start";
+% all subsequent states (rows of transition matrix) procede bottom to top
+% and left to right through the maze, then wrap back to [0 0] and proceed
+% back to "start"
+
 if size(actionlist,2) ~= 1
     error('actionlist must be a column vector')
 end
