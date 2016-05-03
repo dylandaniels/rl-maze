@@ -21,7 +21,7 @@ nSims = 1;
 simulation_data.steps = nan(maxepisodes,nSims,4);
 simulation_data.reward = nan(maxepisodes,nSims,4);
 
-for learning_process = 1%1:4
+for learning_process = 3%1:4
     disp(['Learning process ',num2str(learning_process)])
     switch learning_process
         case 1 % Q-learning

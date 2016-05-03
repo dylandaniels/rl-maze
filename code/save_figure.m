@@ -1,7 +1,7 @@
 function save_figure(name,h,direc)
 % save_figure(figure_name,handel,directory)
 
-directory = '~/Dropbox/CS289_finalProject/figures/';
+directory = '~/Desktop/CS289A/rl-maze/figures/';
 if nargin > 2
     directory = [directory, direc, '/'];
 end

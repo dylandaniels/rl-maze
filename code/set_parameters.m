@@ -1,6 +1,6 @@
-addpath(genpath('~/Dropbox/CS289_finalProject/'))
+addpath(genpath('~/Desktop/CS289A/rl-maze/code/'))
 
-which_maze = 'losses';
+which_maze = 'big';
 switch which_maze
     
     case 'default'
@@ -18,7 +18,7 @@ switch which_maze
     case 'big'
         
         [maze, N, M, reward_landscape]  = CreateMaze(which_maze);
-        load 10maze.mat
+        load 11maze.mat
         start = start_m;
         goal = goal_m;
         maze = m;
