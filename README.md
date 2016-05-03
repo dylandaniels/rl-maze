@@ -1,2 +1,3 @@
-# rl-maze
-Simple RL Algorithms for solving a maze
+RL-maze
+
+* Final project for CS289, graduate-level Machine Learning course at UC Berkeley

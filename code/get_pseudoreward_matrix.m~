@@ -1,0 +1,9 @@
+function pseudoreward_matrix = get_pseudoreward_matrix(V,policy,transition_matrix,discount)
+% ... not setup for proba
+pseudoreward_matrix = zeros(size(transition_matrix,1),size(transition_matrix,3));
+
+for s = 1:size(transition_matrix,1)
+    optimal_action = policy(s);
+    sp = find(transition_matrix(s,:,optimal_action));
+    pseudoreward_matrix(s,optimal_action) = discount*V(sp) - V(s);
+end

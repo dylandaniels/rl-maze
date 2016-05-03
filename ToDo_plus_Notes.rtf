@@ -1,0 +1,76 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 To Do:\
+\
+\
+The GetReward function is only setup for reward at the goal (and zero everywhere else): it should take some reward matrix as input so we can use any reward landscape (in addition to achieving the goal)\
+\
+\
+===============================================================\
+\
+\
+Completed:\
+\
+\
+- Modify the 
+\f1\fs20 get_transitionAndReward_matrices
+\fs24  
+\f0 function so that we no longer have the extra terminal state\'85it\'92s not what MDP_LP so our V values are way off. See test_mdp_lp.m for a working  example. Instead of adding an extra terminal state, (1) in the transition matrix set all probabilities for every action at the goal state to zero, (2) in the reward matrix, set the value for every action at the goal state to the terminal reward. This leads to correctly computed [V, policy]. \
+\
+\
+===============================================================\
+\
+\
+Notes:\
+\
+\
+line 41 of 
+\f1\fs20 pseudoreward_episode
+\f0\fs24 : shouldn\'92t this be 
+\f1\fs20 pseudoreward = gamma * shaping(sp) - shaping(s);
+\fs24  
+\f0 ?\
+\
+\
+the transition matrix is only setup for deterministic transitions - code would need to be modified for probabilistic ones\
+\
+\
+It seems weird to me that the statelist includes walls\'97 and as a consequence walls have value under the optimal policy (even though the agent would never get there).  I tried setting the transition probabilities of all columns of wall states to zero, but it apparently messed up the calculation of V for the whole maze.\
+\
+\
+Paper ideas:\
+- DYNA vs. pseudorewards\
+- DYNA is analogous to replaying memories to update reward associations\
+- Pseudorewards is analogous to possessing general intuition about how to solve a problem\
+	- E.g. social interaction, from past experience, how do you reach harmonious states?\
+	- e.g. from evolution\
+- pseudoreward modifications\
+	- add white noise to pseudo reward optimal policy\
+	- manhattan distance pseudoreward\
+	- f(manhattan distance) for some non-monotonic transformation f\
+	- f(Manahattan distance) plus noise\
+	- moving forward bias (take same action as last action w/ highest probability)\
+- DYNA modifications\
+	- vary the number of \'93replays\'94\
+	- instead of sampling the replays uniformally during planning, sample them w/ higher priority for 	higher q values. sample w/ probability q_i / \\sum_j q_j. \
+- number of Q learning steps as a function of maze size (expected: exponential growth)\
+- histogram of reward outcomes?\
+- pseduorewards outperforms DYNA when there exist suboptimal goal states (i.e. local minima)\
+\
+Division of labor:\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\
+Paul:\
+\
+\
+Dylan:\
+\
+\
+\
+\
+}

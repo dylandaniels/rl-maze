@@ -1,0 +1,129 @@
+
+% load simulation_data.mat
+figure('position',[0 0 900 900])
+subplot(2,1,1)
+Y = squeeze(mean(simulation_data.steps,2));
+E = squeeze(std(simulation_data.steps,0,2))./sqrt(size(simulation_data,2));
+errorbar(Y,E,'linewidth',2)
+legend({'Q-learning','pseudorewards','DYNA','pseudorewards + DYNA'})
+title('100 simulations','fontsize',16)
+xlabel('episode','fontsize',16)
+ylabel('steps (mean \pm SEM)','fontsize',16)
+subplot(2,1,2)
+Y = squeeze(mean(simulation_data.reward,2));
+E = squeeze(std(simulation_data.reward,0,2))./sqrt(size(simulation_data,2));
+errorbar(Y,E,'linewidth',2)
+legend({'Q-learning','pseudorewards','DYNA','pseudorewards + DYNA'})
+title('100 simulations','fontsize',16)
+xlabel('episode','fontsize',16)
+ylabel('reward (mean \pm SEM)','fontsize',16)
+% save_figure('model_comparison_of_learning',gcf,'preliminary')
+
+%%
+mazePosition2vectorPosition = mazePos2vecPos(M,N,start);
+mat = flipud(mazePosition2vectorPosition);
+
+figure
+imagesc(V(mat))
+
+policy_mat = policy(mat)
+
+% figure
+% subplot(2,2,1)
+% pr = pseudoreward_matrix(:,1);
+% image(pr(mat))
+% subplot(2,2,2)
+% pr = pseudoreward_matrix(:,2);
+% image(pr(mat))
+% subplot(2,2,3)
+% pr = pseudoreward_matrix(:,3);
+% image(pr(mat))
+% subplot(2,2,4)
+% pr = pseudoreward_matrix(:,4);
+% image(pr(mat))
+% 
+% qw=V(mat);
+
+
+%%
+q1 = reshape(Q(:,1),[6 9]);
+q2 = reshape(Q(:,2),[6 9]);
+q3 = reshape(Q(:,3),[6 9]);
+q4 = reshape(Q(:,4),[6 9]);
+
+figure
+subplot(2,2,1)
+imagesc(q1)
+subplot(2,2,2)
+imagesc(q2)
+subplot(2,2,3)
+imagesc(q3)
+subplot(2,2,4)
+imagesc(q4)
+
+
+
+
+% tic
+% for i=1:200000
+% if any(size(pos) ~= [1 2]) || size(goal,2) ~= 2
+%     error('unexpected location dimensions')
+% end
+% end
+% toc
+
+%%
+
+x1 = [1,1,1,1,1,1,1;1,1,1,3,1,1,1;1,1,2,2,2,1,1;1,3,2,2,2,3,1;1,1,2,2,2,1,1;1,1,1,3,1,1,1;1,1,1,1,1,1,1];
+x2 = [1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,3,1,1,1,1,1;1,1,1,1,3,2,3,1,1,1,1;1,1,1,1,1,2,1,1,1,1,1;1,1,3,1,2,2,2,1,3,1,1;1,3,2,2,2,2,2,2,2,3,1;1,1,3,1,2,2,2,1,3,1,1;1,1,1,1,1,2,1,1,1,1,1;1,1,1,1,3,2,3,1,1,1,1;1,1,1,1,1,3,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1];
+x3 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,3,1,1,1,3,1,1,1,1,1;1,1,1,1,3,2,3,1,3,2,3,1,1,1,1;1,1,1,1,1,2,1,3,1,2,1,1,1,1,1;1,1,3,1,1,2,2,2,2,2,1,1,3,1,1;1,3,2,2,2,1,1,2,1,1,2,2,2,3,1;1,1,3,1,2,1,2,2,2,1,2,1,3,1,1;1,1,1,3,2,2,2,2,2,2,2,3,1,1,1;1,1,3,1,2,1,2,2,2,1,2,1,3,1,1;1,3,2,2,2,1,1,2,1,1,2,2,2,3,1;1,1,3,1,1,2,2,2,2,2,1,1,3,1,1;1,1,1,1,1,2,1,3,1,2,1,1,1,1,1;1,1,1,1,3,2,3,1,3,2,3,1,1,1,1;1,1,1,1,1,3,1,1,1,3,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+example = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1;1,1,1,1,1,1,1,1,1,3,1,1,1,1,1;1,1,1,1,1,1,1,1,3,2,3,1,1,1,1;1,1,1,1,1,1,1,3,1,2,1,1,1,1,1;1,1,3,1,1,1,3,2,2,2,1,1,3,1,1;1,1,2,2,2,1,1,2,1,1,2,2,2,3,1;1,1,3,1,2,1,2,2,2,1,2,1,3,1,1;1,1,1,3,2,2,2,2,2,2,2,3,1,1,1;1,1,3,1,2,1,2,2,2,1,2,1,3,1,1;1,3,2,2,2,1,1,2,1,1,2,2,2,3,1;1,1,3,1,1,1,3,2,2,2,1,1,3,1,1;1,1,1,1,1,1,1,3,1,2,1,1,1,1,1;1,1,1,1,1,1,1,1,3,2,3,1,1,1,1;1,1,1,1,1,1,1,1,1,3,1,1,1,1,1;1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+figure('units', 'pixels', 'position', [100 100 1200 300], 'resize', 'off'); 
+subplot(1,4,1); imagesc(x1);title('complexity 1 full maze');
+subplot(1,4,2); imagesc(x2);title('complexity 2 full maze');
+subplot(1,4,3); imagesc(x3);title('complexity 3 full maze');
+subplot(1,4,4); imagesc(example);title('complexity 3 random partial maze');
+
+%%
+
+qw = rand(20,20);
+qw = qw > .7;
+figure, imagesc(qw)
+
+
+
+
+
+
+
+%%
+
+
+
+
+
+
+% function show_maze(row, col, rr, cc, ptr_left, ptr_up, ptr_right, ptr_down,h)
+% figure(h)
+% line([.5,col+.5],[.5,.5]) % draw top border
+% line([.5,col+.5],[row+.5,row+.5]) % draw bottom border
+% line([.5,.5],[1.5,row+.5]) % draw left border
+% line([col+.5,col+.5],[.5,row-.5])  % draw right border
+mm = zeros(10,15);
+for ii=1:length(ptr_right)
+    if ptr_right(ii)>0 % right passage blocked
+        mm(cc(ii),rr(ii)) = 1;
+%         line([cc(ii)+.5,cc(ii)+.5],[rr(ii)-.5,rr(ii)+.5]);
+%         hold on
+    end
+    if ptr_down(ii)>0 % down passage blocked
+        line([cc(ii)-.5,cc(ii)+.5],[rr(ii)+.5,rr(ii)+.5]);
+%         hold on
+    end
+    
+end
+% axis equal
+% axis([.5,col+.5,.5,row+.5])
+% axis off
+% set(gca,'YDir','reverse')
+% return
