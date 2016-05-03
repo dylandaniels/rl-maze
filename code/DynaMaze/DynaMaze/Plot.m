@@ -1,10 +1,10 @@
-function Plot( x,a,steps,maze,start,goal, ptitle )
+function sq = Plot( x,a,steps,maze,start,goal, ptitle )
 
 [N M] = size(maze);
 
 subplot(2,1,1);
 % Agent
-plot(x(1)+0.5,x(2)+0.5,'sk','MarkerFaceColor','k','MarkerSize',10);
+% sq = plot(x(1)+0.5,x(2)+0.5,'sk','MarkerFaceColor','k','MarkerSize',10);
 set(gcf,'position',[0 0 1440 820])
 title(ptitle);
 % Create axes

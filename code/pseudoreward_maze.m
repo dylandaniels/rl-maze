@@ -47,7 +47,7 @@ for learning_process = which_learning_process
             
             [total_reward,steps,Q ] =  pseudoreward_episode(maxsteps, Q, Model,...
                 alpha, gamma, epsilon, statelist, actionlist,...
-                grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape) ;
+                grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i) ;
             
             simulation_data.steps(i,simulation,learning_process) = steps;
             simulation_data.reward(i,simulation,learning_process) = total_reward;

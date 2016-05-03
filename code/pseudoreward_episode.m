@@ -1,4 +1,4 @@
-function [ total_reward,steps,Q ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape)
+function [ total_reward,steps,Q ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape,ep)
 % maxstepts: the maximum number of steps per episode
 % Q: the current QTable
 % alpha: the current learning rate
@@ -21,7 +21,7 @@ a   = e_greedy_selection_noWalls(Q,s,epsilon, nonWallActions);
 for i=1:maxsteps
     
     % convert the index of the action into an action value
-    action = actionlist(a)
+    action = actionlist(a);
     
     %do the selected action and get the next car state
     xp  = DoAction( action , x, maze );
@@ -65,7 +65,13 @@ for i=1:maxsteps
     
     % Plot of the mountain car problem
     if (grafic==true)
-        Plot( x,a,steps,maze,start,goal,['Pseudo-reward Learning']);
+        if ep == 1 && i ==1
+            Plot( x,a,steps,maze,start,goal,['Pseudo-reward Learning']);
+            hold on
+            sq = [];
+        end
+        delete(sq)
+        sq = plot(x(1)+0.5,x(2)+0.5,'sk','MarkerFaceColor','k','MarkerSize',10);
     end
     
     % if reachs the goal breaks the episode

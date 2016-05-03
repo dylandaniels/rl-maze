@@ -4,6 +4,7 @@ function [ posp ] = DoAction( action, pos,maze )
 % pos: is the vector containning the position 
 
 
+maze = rot90(maze,3);
 
 x = pos(1);
 y = pos(2); 
