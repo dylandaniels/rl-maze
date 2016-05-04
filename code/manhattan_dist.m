@@ -23,4 +23,7 @@ shaping = flipud(shaping);
 shaping = reshape(shaping, [nrows*ncols, 1]);
 
 
+% Scale??
+% shaping = 0.1 * shaping
+
 end
