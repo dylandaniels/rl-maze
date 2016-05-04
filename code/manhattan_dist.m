@@ -18,5 +18,9 @@ for i = 1:nrows
     end
 end
 
+% Actual maze is upside-down
+shaping = flipud(shaping);
+shaping = reshape(shaping, [nrows*ncols, 1]);
+
 
 end

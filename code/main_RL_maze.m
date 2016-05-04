@@ -12,7 +12,9 @@ which_learning_process = 2; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
 
 
 % Only necessary if which_learning_process == 2
-which_pseudoreward = 'optimal_policy';
+% One of:
+%  'optimal_policy', 'manhattan', 'optimal_policy_noisy', 'manhattan_noisy'
+which_pseudoreward = 'manhattan';
 
 grafica     = true; % indicates if display the graphical interface
 
@@ -65,7 +67,8 @@ maxepisodes = 50; % maximum number of episodes
 maxsteps    = 2000;  % maximum number of steps per episode
 alpha       = 0.1;   % learning rate
 gamma       = 0.95;  % discount factor
-epsilon     = 0.1;   % probability of a random action selection
+epsilon     = 0.25;   % probability of a random action selection
+sigma       = 0.05;   % std. dev. for noisy psuedorewards
 
 
 xpoints=[];

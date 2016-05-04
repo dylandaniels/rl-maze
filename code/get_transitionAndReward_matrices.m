@@ -22,7 +22,7 @@ nactions    = size(actionlist, 1);
 transition_matrix = zeros(nstates, nstates, nactions); 
 reward_matrix = zeros(nstates, nactions); 
 
-mazePosition2vectorPosition = mazePos2vecPos(M,N,start);
+mazePosition2vectorPosition = mazePos2vecPos(M,N);
 for i = 1:size(goal,1)
     terminal_state(i) = mazePosition2vectorPosition(goal(i,2)+1,goal(i,1)+1);
 end
@@ -48,7 +48,7 @@ end
 for i = 1:size(goal,1)
     transition_matrix(terminal_state(i),:,:) = 0;
 end
-ix = find(rot90(maze));
+ix = find(maze);
 mat = flipud(mazePosition2vectorPosition);
 wall_ind = mat(ix);
 transition_matrix(wall_ind,:,:) = 0;

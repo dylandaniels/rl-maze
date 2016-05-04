@@ -13,16 +13,25 @@ switch which_pseudoreward
     case 'manhattan'
         shaping = manhattan_dist(maze, goal, gamma);
     case 'optimal_policy_noisy'
-        
+        [transition_matrix, reward_matrix] = ...
+            get_transitionAndReward_matrices(statelist,actionlist,maze,...
+                                             M,N,start,goal,...
+                                             reward_landscape);
+                                         
+        [V, policy, cpu_time] = mdp_LP(transition_matrix, reward_matrix,...
+                                       gamma);
+                                   
+        shaping = V;
+        shaping = shaping + randn(size(shaping)) * sigma;
     case 'manhattan_noisy'
-        
+        shaping = manhattan_dist(maze, goal, gamma);
+        shaping = shaping + randn(size(shaping)) * sigma;
 end
-% shaping = pseudorewards;
 
 simulation_data.steps = nan(maxepisodes,nSims,4);
 simulation_data.reward = nan(maxepisodes,nSims,4);
 
-sq= [];
+sq = [];
 
 for learning_process = which_learning_process
     disp(['Learning process ',num2str(learning_process)])

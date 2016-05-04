@@ -3,7 +3,7 @@ function nonWallActions = get_wallActions(maze)
 mazeWall = ones(size(maze,1)+2,size(maze,2)+2);
 mazeWall(2:end-1,2:end-1) = maze;
 
-vecPos = flipud(mazePos2vecPos(size(maze,1),size(maze,2),[]));
+vecPos = flipud(mazePos2vecPos(size(maze,1),size(maze,2)));
 
 nonWallActions = cell(numel(maze),1);
 for r = 1:size(maze,1)
