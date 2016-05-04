@@ -1,2 +1,7 @@
 *.m~
 *.DS_Store
+final_report.aux
+final_report.fdb_latexmk
+final_report.fls
+final_report.log
+final_report.synctex.gz

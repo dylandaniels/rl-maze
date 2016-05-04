@@ -52,8 +52,23 @@ V_{\pi^*}(s) =  \max_{a} R(s, s') + \gamma V_{\pi^*}(s')
 \end{equation}
 We call this method the \textit{optimal policy pseudoreward}--it encourages the agent to always move down the optimal path from its current state. If $\epsilon = 0$, the agent would move directly to the goal along the shortest path.
 
+While the \textit{optimal policy pseudoreward} performs well in practice, it's a bit unrealistic for the agent to have such a complete information set in most applications. To compute the optimal policy, the agent must solve a linear program and have full information about states, actions, transitions, and goal states. A more realistic set of pseudorewards can be derived by approximating the distance to the goal. Intuitively, this corresponds to the agent generally knowing which direction to move in. We call this the \textit{manhattan pseudoreward}.
+
+For our maze environment, we use the Manhattan distance metric to implement distance-based pseudorewards. We define the Manhattan distance metric as $\Phi(s) = \gamma^T$, where $T$ is the Manhattan distance, to form the pseudoreward
+\begin{equation}
+F(s, s') = \gamma \Phi(s') - \Phi(s)
+\end{equation} 
+which fulfills the conditions in \{Andrew Ng paper\} to be an invariant reward transformation. 
+
+In addition, we also test how sensitive both of the above pseudorewards are to additive white noise. For each pseudoreward $F(s, s')$ conferred, let
+\begin{equation}
+\tilde{F}(s, s') = F(s, s') + e_t
+\end{equation} 
+
+\noindent where $e_t \sim N(0, \sigma^2)$. The larger the value of $\sigma$, the more noisy the pseudoreward $\tilde{F}$.  
 
 \section*{Experiments}
+
 
 
 
