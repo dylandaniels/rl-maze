@@ -1,0 +1,64 @@
+\documentclass[notitlepage]{report}
+
+\usepackage{amsmath}
+\usepackage{titling}
+
+\title{Cognitive Mechanisms for Reinforcement Learning Refinement}
+\author{Paul Krueger and Dylan Daniels}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+blah blah
+\end{abstract}
+
+\section*{Introduction}
+
+\section*{Methods}
+
+To explore theories about reinforcement learning in cognition, we constructed a simple two-dimensional maze game whereby an agent was tasked with learning how to reach a terminal goal state from a start state. The terminal goal state confers the agent a reward of 1 point, and resets the agent's location to the starting point (Figure something of maze). We call each goal-finding session an episode. We study two different mazes: a \textit{sparse} maze and a \textit{dense} maze. The sparse maze is easier for the agent to solve, but it is also easier for the agent to get stuck in a suboptimal path. The dense maze, on the other hand, has only one clear path to the solution; as a result, we expect heuristic-based pseudorewards to often fail to find the optimal path.
+
+All of our methods are based on a common model-free reinforcement learning paradigm known as Q-learning (some reference here? Sutton?), which learns an optimal policy $\pi^*$ over time. Let $\mathcal{S}$ be the set of states and let $\mathcal{A}$ be the set of actions. For each $(s,a) \in \mathcal{S} \times \mathcal{A}$, a value $Q(s,a)$ is learned via the following algorithm. Initially all $Q(s,a)$ are zero. At each step in state $s$, with probability $1 - \epsilon$, the agent chooses the action $a \in \mathcal{A}$ with the highest value $Q(s,a)$. With probability $\epsilon$ it chooses an action uniformly at random ($\epsilon$ is a hyperparameter that calibrates the explore-exploit tradeoff). Then, after completing the selected action $a$, the agent moves to $s'$ and updates $Q$ by
+
+\begin{equation}
+Q(s,a) \leftarrow Q(s,a) + \alpha (R_(s, s') + \gamma \max_{a'} Q(s', a') - Q(s,a))
+\label{eq:q-learn}
+\end{equation}
+
+where $\alpha$ is the learning rate, $R_(s, s')$ is the reward received at state $s'$, and $\gamma$ is the discount factor. Q-learning will converge with probability one to the optimal policy. 
+
+\subsection*{DYNA Planning}
+
+Using the DYNA framework described in \{some reference\}, we can improve upon the naive Q-learning algorithm by recalling certain moves made. From a cognitive science perspective, this type of optimization is interesting because it is as if we are replaying past memories. In other words, is it cognitively advantageous to learn think about past experiences, and as a result, learn more from them? 
+
+Planning is implemented by re-updating $p$ Q-values randomly at the end of each episode using Equation~\ref{eq:q-learn}. 
+
+\subsection*{Pseudorewards}
+
+Pseudorewards are an intelligible way of conferring extra information to the agent about the reward landscape. Essentially, a small reward is given to the Q-learner whenever they take an action that helps the agent move towards the goal. Pseudorewards are defined by \textit{shaping functions} $F$. Instead of the agent receiving actual reward $R(s)$ at step $s$, the agent receives an augmented reward $R'(s)$ where
+\begin{equation}
+R'(s, s') = R(s, s') + F(s, s')
+\end{equation} 
+
+ In \{that Andrew Ng paper\}, conditions for which the optimal policy $\pi^*$ remains invariant under a \textit{shaping function} are developed. If the shaping function does not possess this invariance policy, it is possible that Q-learning will converge to a suboptimal solution. The simplest example of an invariant shaping function uses the difference in optimal values between the agent's current state and next state:
+\begin{equation}
+F(s, s') = \gamma V_{\pi^*}(s') - V_{\pi^*}(s) 
+\end{equation}
+\begin{equation}
+V_{\pi^*}(s) =  \max_{a} R(s, s') + \gamma V_{\pi^*}(s')
+\end{equation}
+We call this method the \textit{optimal policy pseudoreward}--it encourages the agent to always move down the optimal path from its current state. If $\epsilon = 0$, the agent would move directly to the goal along the shortest path.
+
+
+\section*{Experiments}
+
+
+
+\section*{Discussion}
+
+\section*{References}
+
+\end{document}
