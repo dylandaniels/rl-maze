@@ -8,7 +8,7 @@ else
 end
 
 nSims = 100;
-which_learning_process = 2; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
+which_learning_process = 1:4; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
 do_plot = true;
 
 % Only necessary if which_learning_process == 2

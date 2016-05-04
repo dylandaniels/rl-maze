@@ -5,7 +5,7 @@ host = char(getHostName(java.net.InetAddress.getLocalHost));
 if strcmp(host(1:4),'Paul')
     directory = '~/Desktop/CS289A/rl-maze/figures/';
 else
-    directory = 'DYLANPATH/rl-maze/figures/';
+    directory = '~/cs289/rl-maze/figures/';
 end
 
 if nargin > 2
