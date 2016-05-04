@@ -7,16 +7,16 @@ else
     addpath(genpath('~/cs289/rl-maze/code/'))
 end
 
-nSims = 1;
+nSims = 100;
 which_learning_process = 2; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
-
+do_plot = true;
 
 % Only necessary if which_learning_process == 2
 % One of:
 %  'optimal_policy', 'manhattan', 'optimal_policy_noisy', 'manhattan_noisy'
-which_pseudoreward = 'optimal_policy';
+which_pseudoreward = 'manhattan';
 
-grafica     = true; % indicates if display the graphical interface
+grafica     = false; % indicates if display the graphical interface
 
 which_maze = 'big';
 switch which_maze
@@ -76,3 +76,7 @@ ypoints=[];
 
 % Run it!
 pseudoreward_maze
+
+if do_plot
+    plot_stepsAndReward_vs_episode
+end
