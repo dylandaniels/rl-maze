@@ -1,4 +1,4 @@
-function [ total_reward,steps,Q, sq ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape,ep,sq)
+function [ total_reward,steps,Q, sq, xpoints, ypoints ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape,ep,sq,xpoints,ypoints)
 % maxstepts: the maximum number of steps per episode
 % Q: the current QTable
 % alpha: the current learning rate
@@ -90,9 +90,9 @@ if (grafic==true)
     
     xpoints(ep)=ep-1;
     ypoints(ep)=steps;
-    subplot(2,1,2);
-    plot(xpoints,ypoints)
-    title(['Episode: ',int2str(i),' epsilon: ',num2str(epsilon)])
+    subplot(2,1,2); hold on;
+    plot(xpoints,ypoints,'color','k')
+    title(['Episode: ',int2str(ep),' epsilon: ',num2str(epsilon)])
 
     drawnow
 end
