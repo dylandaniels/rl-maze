@@ -14,11 +14,12 @@ do_plot = true;
 % Only necessary if which_learning_process == 2
 % One of:
 %  'optimal_policy', 'manhattan', 'optimal_policy_noisy', 'manhattan_noisy'
+
 which_pseudoreward = 'manhattan';
 
 grafica     = false; % indicates if display the graphical interface
 
-which_maze = 'big';
+which_maze = 'sparse';
 switch which_maze
     
     case 'default'
@@ -33,15 +34,26 @@ switch which_maze
         goal        = [8 5; 8 0];
         [maze, N, M, reward_landscape]  = CreateMaze(which_maze);
         
-    case 'big'
+    case 'dense'
         
         [~, ~, ~, reward_landscape]  = CreateMaze(which_maze);
         load 11maze.mat
         start = start_m;
         goal = goal_m;
         maze = m;
-%         maze_plot = rot90(m,3);
-%         maze = rot90(m,3);
+        M = size(maze,1);
+        N = size(maze,2);
+        if ~all(size(reward_landscape)==size(m))
+            error('reward landscape wrong size-- fix CreateMaze')
+        end
+    
+    case 'sparse'
+        
+        [~, ~, ~, reward_landscape]  = CreateMaze(which_maze);
+        load 11maze_sparse.mat
+        start = start_m;
+        goal = goal_m;
+        maze = m;
         M = size(maze,1);
         N = size(maze,2);
         if ~all(size(reward_landscape)==size(m))

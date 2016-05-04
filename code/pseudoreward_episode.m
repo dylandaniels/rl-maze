@@ -73,7 +73,7 @@ for i=1:maxsteps
         if i == 1
             subplot(2,1,1);
         end
-        pause(.005)
+        pause(.00001)
         delete(sq)
         sq = plot(x(1)+0.5,x(2)+0.5,'sk','MarkerFaceColor','k','MarkerSize',10);
     end
