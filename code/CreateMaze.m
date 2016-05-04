@@ -38,7 +38,16 @@ switch which_maze
         reward_landscape(5,9) = -2;
         reward_landscape(6,8) = -2;
         
-    case 'big'        
+    case 'dense'        
+        
+        nrows = 11;
+        ncols = 11;
+        maze = nan;
+        
+        reward_landscape = zeros(11,11);
+        reward_landscape(11,11) = 1;
+        
+    case 'sparse'        
         
         nrows = 11;
         ncols = 11;

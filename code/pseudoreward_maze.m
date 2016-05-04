@@ -11,7 +11,7 @@ switch which_pseudoreward
                                    
         shaping = V;
     case 'manhattan'
-        shaping = manhattan_dist(maze, goal, gamma);
+        shaping = 0.1*manhattan_dist(maze, goal, gamma);
     case 'optimal_policy_noisy'
         [transition_matrix, reward_matrix] = ...
             get_transitionAndReward_matrices(statelist,actionlist,maze,...
