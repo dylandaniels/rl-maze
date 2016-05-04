@@ -1,3 +1,12 @@
+
+simulation_data.steps = nan(maxepisodes,nSims,5);
+simulation_data.reward = nan(maxepisodes,nSims,5);
+sigmas = sigma;
+p_steps_all = p_steps;
+for ps = 1:length(p_steps_all)
+    p_steps = p_steps_all(ps);
+for sig = 1:length(sigmas)
+    sigma = sigmas(sig);
 for pr = 1:length(which_pseudorewards)
     which_pseudoreward = which_pseudorewards{pr};
 switch which_pseudoreward
@@ -31,9 +40,6 @@ switch which_pseudoreward
         shaping = manhattan_dist(maze, goal, gamma);
         opts.noisy = true;
 end
-
-simulation_data.steps = nan(maxepisodes,nSims,3);
-simulation_data.reward = nan(maxepisodes,nSims,3);
 
 sq = [];
 
@@ -72,8 +78,8 @@ for learning_process = which_learning_process
                 grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i, sq,xpoints,ypoints,...
                 sigma) ;
             
-            simulation_data.steps(i,simulation,pr) = steps;
-            simulation_data.reward(i,simulation,pr) = total_reward;
+            simulation_data.steps(i,simulation,ps) = steps;
+            simulation_data.reward(i,simulation,ps) = total_reward;
             
             
             if grafica
@@ -83,5 +89,7 @@ for learning_process = which_learning_process
             end
         end
     end
+end
+end
 end
 end

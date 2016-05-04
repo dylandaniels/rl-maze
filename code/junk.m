@@ -106,3 +106,11 @@ while isempty(x)
     x=input('hi');
     figure(gcf)
 end
+
+
+%%
+
+
+simulation_data.steps = cat(3,sd.steps(:,:,1),simulation_data.steps)
+simulation_data.reward = cat(3,sd.reward(:,:,1),simulation_data.reward)
+
