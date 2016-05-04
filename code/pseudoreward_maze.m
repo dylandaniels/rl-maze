@@ -58,12 +58,14 @@ for learning_process = which_learning_process
         % reset Q for each simulation
         Q = BuildQTable(nstates,nactions);
         
+        xpoints = [];
+        ypoints = [];
         for i=1:maxepisodes
             
             
-            [total_reward,steps,Q, sq ] =  pseudoreward_episode(maxsteps, Q, Model,...
+            [total_reward,steps,Q, sq,xpoints,ypoints ] =  pseudoreward_episode(maxsteps, Q, Model,...
                 alpha, gamma, epsilon, statelist, actionlist,...
-                grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i, sq) ;
+                grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i, sq,xpoints,ypoints) ;
             
             simulation_data.steps(i,simulation,learning_process) = steps;
             simulation_data.reward(i,simulation,learning_process) = total_reward;

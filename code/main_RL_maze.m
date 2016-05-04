@@ -14,7 +14,7 @@ which_learning_process = 4; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
 % Only necessary if which_learning_process == 2
 % One of:
 %  'optimal_policy', 'manhattan', 'optimal_policy_noisy', 'manhattan_noisy'
-which_pseudoreward = 'manhattan';
+which_pseudoreward = 'optimal_policy';
 
 grafica     = true; % indicates if display the graphical interface
 
