@@ -10,8 +10,10 @@ switch which_pseudoreward
                                        gamma);
                                    
         shaping = V;
+        opts.noisy = false;
     case 'manhattan'
-        shaping = 0.1*manhattan_dist(maze, goal, gamma);
+        shaping = manhattan_dist(maze, goal, gamma);
+        opts.noisy = false;
     case 'optimal_policy_noisy'
         [transition_matrix, reward_matrix] = ...
             get_transitionAndReward_matrices(statelist,actionlist,maze,...
@@ -22,10 +24,10 @@ switch which_pseudoreward
                                        gamma);
                                    
         shaping = V;
-        shaping = shaping + randn(size(shaping)) * sigma;
+        opts.noisy = true;
     case 'manhattan_noisy'
         shaping = manhattan_dist(maze, goal, gamma);
-        shaping = shaping + randn(size(shaping)) * sigma;
+        opts.noisy = true;
 end
 
 simulation_data.steps = nan(maxepisodes,nSims,4);
@@ -65,7 +67,8 @@ for learning_process = which_learning_process
             
             [total_reward,steps,Q, sq,xpoints,ypoints ] =  pseudoreward_episode(maxsteps, Q, Model,...
                 alpha, gamma, epsilon, statelist, actionlist,...
-                grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i, sq,xpoints,ypoints) ;
+                grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i, sq,xpoints,ypoints,...
+                sigma) ;
             
             simulation_data.steps(i,simulation,learning_process) = steps;
             simulation_data.reward(i,simulation,learning_process) = total_reward;

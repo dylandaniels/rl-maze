@@ -1,4 +1,4 @@
-function [ total_reward,steps,Q, sq, xpoints, ypoints ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape,ep,sq,xpoints,ypoints)
+function [ total_reward,steps,Q, sq, xpoints, ypoints ] = pseudoreward_episode(  maxsteps, Q, Model, alpha, gamma,epsilon,statelist,actionlist,grafic,maze,start,goal,p_steps, shaping, opts,reward_landscape,ep,sq,xpoints,ypoints,sigma)
 % maxstepts: the maximum number of steps per episode
 % Q: the current QTable
 % alpha: the current learning rate
@@ -41,6 +41,9 @@ for i=1:maxsteps
         % Set r to real reward value plus psuedo-reward
         % i.e., Q Learning updates "as if" the pseudo-reward was a real reward
         pseudoreward = gamma * shaping(sp) - shaping(s);
+        if opts.noisy
+           pseudoreward = pseudoreward + randn() * sigma;
+        end
         r = r + pseudoreward;
     end
     
