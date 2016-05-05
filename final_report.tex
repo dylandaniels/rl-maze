@@ -5,9 +5,10 @@
 \usepackage{graphicx}
 \usepackage[margin=1.5in]{geometry}
 \usepackage{cite}
+\usepackage{subcaption}
 
 
-\graphicspath{{figures/paper/preliminary/}}
+\graphicspath{{figures/paper/final/}{figures/paper/preliminary/}}
 
 \title{Cognitive Mechanisms for Reinforcement Learning Refinement}
 
@@ -31,6 +32,22 @@ blah blah blah we need to put stuff here.
 \section*{Introduction}
 
 \section*{Methods}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.4\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{dense_maze}
+  \caption{The dense maze.}
+\end{subfigure}
+\begin{subfigure}{.4\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{sparse_maze}
+  \caption{The sparse maze.}
+\end{subfigure}
+\caption{Two variants of the maze game. The square labelled ``S'' is the agent's start state, and the square labelled ``G'' is the goal state. The black box is the agent. The gray squares are wall obstacles.}
+\label{fig:mazes}
+\end{figure}
 
 To explore theories about reinforcement learning in cognition, we constructed a simple two-dimensional maze game whereby an agent was tasked with learning how to reach a terminal goal state from a start state. The terminal goal state confers the agent a reward of 1 point, and resets the agent's location to the starting point (Figure something of maze). We study two different mazes: a \textit{sparse} maze and a \textit{dense} maze. The sparse maze is easier for the agent to solve, but it is also easier for the agent to get stuck in a suboptimal path. The dense maze, on the other hand, has only one clear path to the solution; as a result, we expect heuristic-based pseudorewards to often fail to find the optimal path.
 
@@ -68,7 +85,8 @@ We call this method the \textit{optimal policy pseudoreward}--it encourages the 
 While the \textit{optimal policy pseudoreward} performs well in practice, it's a bit unrealistic for the agent to have such a complete information set in most applications. To compute the optimal policy, the agent must solve a linear program and have full information about states, actions, transitions, and goal states. A more realistic set of pseudorewards can be derived by approximating the distance to the goal. Intuitively, this corresponds to the agent generally knowing which direction to move in. We call this the \textit{Manhattan pseudoreward}.
 
 \begin{figure}[ht]
-\includegraphics[width=\textwidth]{value_landscapes}
+\centering
+\includegraphics[width=0.8\textwidth]{value_landscapes}
 \caption{The landscape of pseudorewards for each maze and each pseudoreward type. Pseudorewards are concocted so that the agent is incentivized to move towards the goal state in the lower rightmost square.}
 \label{fig:value-landscapes}
 \end{figure}
@@ -88,28 +106,33 @@ In addition, we also test the sensitivity of both pseudoreward methods to additi
 
 \section*{Experiments}
 
+To analyze the performance of our agent in each of our two maze environments: \textit{sparse} and \textit{dense}, we ran 100 simulations of reinforcement learning for each condition. In each simulation, we allowed the agent to learn for 50 episodes; the agent automatically advanced to the next episode without reward if a maximum of 2000 steps was reached. For all of our experiments, we set the learning rate $\alpha = 0.1$, the exploratory probability $\epsilon = 0.25$, and the discount factor $\gamma = 0.95$. 
+
 \begin{figure}[ht]
-\includegraphics[width=\textwidth]{modelCompare_dense}
-\includegraphics[width=\textwidth]{modelCompare_sparse}
-\caption{The mean number of steps taken for each episode are plotted above for Q-learning and 3 variants. The mean is taken over 100 simulations of 50 episodes.}
+\includegraphics[width=\textwidth]{modelCompareNoNoise}
+\caption{The mean number of steps taken for each episode are plotted above for Q-learning and 5 variants, for both the dense maze (shown in solid lines) and the sparse maze (shown in dashed lines). The means are taken over 100 simulations of 50 episodes.}
 \label{fig:model-compare}
 \end{figure}
 
-To analyze the performance of our agent in each of our two maze environments: \textit{sparse} and \textit{dense}, we ran 100 simulations of reinforcement learning for each condition. In each simulation, we allowed the agent to learn for 50 episodes; the agent automatically advanced to the next episode without reward if a maximum of 2000 steps was reached. For all of our experiments, we set the learning rate $\alpha = 0.1$, the exploratory probability $\epsilon = 0.25$, and the discount factor $\gamma = 0.95$. 
-
-As a first pass, we compare the DYNA architecture with 10 replays with the optimal policy pseudoreward architecture (Figure~\ref{fig:model-compare}). All methods converge to the optimal number of steps: 20 for sparse, 24 for dense. DYNA converges more quickly than regular Q-learning, validating the hypothesis that replaying memories speeds up the learning process. We also see that the optimal policy pseudoreward converges nearly instantly to the optimal value, which is expected because the agent is incentivized to follow the optimal path from the start. When the optimal policy pseudoreward is combined with DYNA for replaying memories, it converges just as fast. 
+As a first pass, we compare the DYNA architecture with $p =20$ replays with the optimal policy and manhattan pseudoreward architectures (Figure~\ref{fig:model-compare}). For the sparse maze, shown in dashed lines, all methods converge to the optimal number of steps: 20. For the dense maze, the optimal number of steps is 24 and all methods converge except the manhattan distance-based pseudoreward. This is because in the dense maze (shown in Figure~\ref{fig:mazes}), it is very easy for the agent to get stuck following a false pseudoreward path towards the goal: the agent keeps butting up against a wall on the lower right or lower left. For both mazes, DYNA converges more quickly than regular Q-learning, validating the hypothesis that replaying memories speeds up the learning process. We also see that the optimal policy pseudoreward converges nearly instantly to the optimal value, which is expected because the agent is incentivized to follow the optimal path from the start. When the optimal policy pseudoreward is combined with DYNA for replaying memories, it converges just as fast. For the manhattan pseudoreward, combining with DYNA improves the convergence rate. 
 
 Next, in Figure~\ref{fig:dyna-compare} we analyze the performance of DYNA by varying the number of moves replayed at the conclusion of each episode. As the number of replays increases, the convergence rate of Q learning increases. It is interesting to note that as a function of episodes, the dense maze appears to have a concave shape while the sparse maze has a convex shape. This means that the majority of learning happens later for the dense maze than for the sparse maze. This is probably due to the fact that it takes longer for the agent to find the optimal path in the dense maze, but once it finds it, learning happens rapidly after. 
 
 \begin{figure}[ht]
-\includegraphics[width=\textwidth]{DYNAcompare_dense}
-\includegraphics[width=\textwidth]{DYNAcompare_sparse}
-\caption{The mean number of steps taken for 100 simulations of DYNA learning. The convergence rate increases with the number of replays.}
+\includegraphics[width=\textwidth]{DYNAcompare}
+\caption{The mean number of steps taken for 100 simulations of DYNA learning. The dense maze is shown in solid lines, while the sparse maze is shown in dashed lines. The convergence rate increases with the number of replays.}
 \label{fig:dyna-compare}
 \end{figure}
 
-We finally compare the performance of our two pseudoreward strategies. As can be seen in Figure {something}, 
+We finally compare the performance of our two pseudoreward strategies in the presence of white noise (see Figure~\ref{fig:model-compare-noise}). For the dense maze (solid lines), we see that the manhattan pseudoreward continues to fail to converge within 50 episodes in the presence of noise; because it had not converged without noise, this is unsurprising. The optimal policy reward plus noise also fails to converge to the optimal number of steps; however, it appears to reach a type of equilibrium (at least in this time frame) at around 1000 steps. Counterintuitively, adding DYNA replaying to this strategy actually \textit{worsens} performance; the mean number of steps stays at around 1900. We believe this is occuring because the DYNA planning stage after each step is reinforcing counterproductive behavior; DYNA adds more noise to an already noisy process. 
 
+For the sparse maze, adding white noise to the pseudorewards prevents convergence to the true optimal value of 20 steps; both manhattan and optimal policy pseudorewards seem to converge to about 200 steps. In this case, regular Q-learning and DYNA outperform noisy pseudorewards. Curiously, when DYNA replaying is combined with each of these noisy pseudorewards strategies, it drastically cuts performance--both pseudoreward strategies fail to converge and hover around 1500 steps. This is probably due to the fact that the DYNA replays are updating $Q(s,a)$ values for ``bad moves''; reinforcement learning is reinforcing the wrong thing.
+
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{modelCompareHighNoise}
+\caption{Pseudoreward learning under white noise. The mean number of steps taken for 100 simulations. The dense maze is shown in solid lines, while the sparse maze is shown in dashed lines. }
+\label{fig:model-compare-noise}
+\end{figure}
 
 \section*{Discussion}
 
