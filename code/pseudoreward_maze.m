@@ -1,6 +1,6 @@
 
-simulation_data.steps = nan(maxepisodes,nSims,5);
-simulation_data.reward = nan(maxepisodes,nSims,5);
+simulation_data.steps = nan(maxepisodes,nSims,1);
+simulation_data.reward = nan(maxepisodes,nSims,1);
 sigmas = sigma;
 p_steps_all = p_steps;
 for ps = 1:length(p_steps_all)
@@ -78,8 +78,8 @@ for learning_process = which_learning_process
                 grafica, maze, start, goal, p_steps, shaping, opts, reward_landscape,i, sq,xpoints,ypoints,...
                 sigma) ;
             
-            simulation_data.steps(i,simulation,ps) = steps;
-            simulation_data.reward(i,simulation,ps) = total_reward;
+            simulation_data.steps(i,simulation,sig) = steps;
+            simulation_data.reward(i,simulation,sig) = total_reward;
             
             
             if grafica

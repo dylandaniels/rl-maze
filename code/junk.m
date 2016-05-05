@@ -110,7 +110,12 @@ end
 
 %%
 
+sd=simulation_data
+load 100sim_PRoptSigma-1-2-4-8_sparse
+simulation_data
 
-simulation_data.steps = cat(3,sd.steps(:,:,1),simulation_data.steps)
-simulation_data.reward = cat(3,sd.reward(:,:,1),simulation_data.reward)
+simulation_data.steps = cat(3,sd.steps(:,:),simulation_data.steps)
+simulation_data.reward = cat(3,sd.reward(:,:),simulation_data.reward)
+
+save('100sim_PRoptSigma-1-2-4-8_sparse','simulation_data')
 

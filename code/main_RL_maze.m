@@ -8,14 +8,14 @@ else
 end
 
 nSims = 100;
-which_learning_process = 3; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
+which_learning_process = 4; % 1=Q-learning, 2=psuedorewards, 3=DYNA, 4=both
 do_plot = true;
 
 % Only necessary if which_learning_process == 2
 % One of:
 %  'optimal_policy', 'manhattan', 'optimal_policy_noisy', 'manhattan_noisy'
 
-which_pseudorewards = {'optimal_policy_noisy'};
+which_pseudorewards = {'manhattan'};
 
 grafica     = false; % indicates if display the graphical interface
 
@@ -73,14 +73,14 @@ Q           = BuildQTable(nstates, nactions); % the Qtable
 Model       = BuildModel(nstates, nactions); % the Qtable   
 
 % planning steps
-p_steps     = 10;
+p_steps     = 20;
 
 maxepisodes = 50; % maximum number of episodes
 maxsteps    = 2000;  % maximum number of steps per episode
 alpha       = 0.1;   % learning rate
 gamma       = 0.95;  % discount factor
 epsilon     = 0.25;   % probability of a random action selection
-sigma       = 0.05;   % std. dev. for noisy psuedorewards
+sigma       = 0;%.05;   % std. dev. for noisy psuedorewards
 
 
 xpoints=[];
