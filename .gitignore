@@ -5,3 +5,5 @@ final_report.fdb_latexmk
 final_report.fls
 final_report.log
 final_report.synctex.gz
+final_report.bbl
+final_report.blg
