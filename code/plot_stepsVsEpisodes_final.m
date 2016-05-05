@@ -4,7 +4,7 @@ SAVE = true;
 
 plotTypes = {'models','modelsLowNoise','DYNA','PRdense','PRsparse'};
 
-for i = 4:5%1:length(plotTypes)
+for i = 1:length(plotTypes)
     
 plotType = plotTypes{i};
 

@@ -1,8 +1,8 @@
 function save_figure(name,h,direc)
 % save_figure(figure_name,handel,directory)
 
-host = char(getHostName(java.net.InetAddress.getLocalHost));
-if strcmp(host(1:4),'Paul')
+host = getenv('USER');
+if strcmp(host(1:4),'paul')
     directory = '~/Desktop/CS289A/rl-maze/figures/';
 else
     directory = '~/cs289/rl-maze/figures/';
@@ -16,4 +16,5 @@ if ~exist(directory,'dir')
     mkdir(directory)
 end
 
-saveFigurePdf(h,[directory,name])
+saveas(h,[directory,name,'.png'])
+% saveFigurePdf(h,[directory,name])

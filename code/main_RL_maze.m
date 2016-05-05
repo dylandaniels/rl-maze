@@ -1,7 +1,7 @@
 clear all;
 
-host = char(getHostName(java.net.InetAddress.getLocalHost));
-if strcmp(host(1:4),'Paul')
+host = getenv('USER');
+if strcmp(host(1:4),'paul')
     addpath(genpath('~/Desktop/CS289A/rl-maze/code/'))
 else
     addpath(genpath('~/cs289/rl-maze/code/'))
