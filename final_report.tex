@@ -124,14 +124,23 @@ Next, in Figure~\ref{fig:dyna-compare} we analyze the performance of DYNA by var
 \label{fig:dyna-compare}
 \end{figure}
 
-We finally compare the performance of our two pseudoreward strategies in the presence of white noise (see Figure~\ref{fig:model-compare-noise}). For the dense maze (solid lines), we see that the Manhattan pseudoreward continues to fail to converge within 50 episodes in the presence of noise; because it had not converged without noise, this is unsurprising. The optimal policy reward plus noise also fails to converge to the optimal number of steps; however, it appears to reach a type of equilibrium (at least in this time frame) at around 1000 steps. Counterintuitively, adding DYNA replaying to this strategy actually \textit{worsens} performance; the mean number of steps stays at around 1900. We believe this is occuring because the DYNA planning stage after each step is reinforcing counterproductive behavior; DYNA adds more noise to an already noisy process. 
+We next compare the performance of our two pseudoreward strategies in the presence of white noise (see Figure~\ref{fig:model-compare-noise}). For the dense maze (solid lines), we see that the Manhattan pseudoreward continues to fail to converge within 50 episodes in the presence of noise; because it had not converged without noise, this is unsurprising. The optimal policy reward plus noise also fails to converge to the optimal number of steps; however, it appears to reach a type of equilibrium (at least in this time frame) at around 1000 steps. Counterintuitively, adding DYNA replaying to this strategy actually \textit{worsens} performance; the mean number of steps stays at around 1900. We believe this is occuring because the DYNA planning stage after each step is reinforcing counterproductive behavior; DYNA adds more noise to an already noisy process. 
 
-For the sparse maze, adding white noise to the pseudorewards prevents convergence to the true optimal value of 20 steps; both Manhattan and optimal policy pseudorewards seem to converge to about 200 steps. In this case, regular Q-learning and DYNA outperform noisy pseudorewards. Curiously, when DYNA replaying is combined with each of these noisy pseudorewards strategies, it drastically cuts performance--both pseudoreward strategies fail to converge and hover around 1500 steps. This is probably due to the fact that the DYNA replays are updating $Q(s,a)$ values for ``bad moves''; reinforcement learning is reinforcing the wrong thing.
+For the sparse maze, adding white noise with $\sigma = 0.4$ to the pseudorewards prevents convergence to the true optimal value of 20 steps; both Manhattan and optimal policy pseudorewards seem to converge to about 200 steps. In this case, regular Q-learning and DYNA outperform noisy pseudorewards. Curiously, when DYNA replaying is combined with each of these noisy pseudorewards strategies, it drastically cuts performance--both pseudoreward strategies fail to converge and hover around 1500 steps. This is probably due to the fact that the DYNA replays are updating $Q(s,a)$ values for ``bad moves''; reinforcement learning is reinforcing the wrong thing.
 
 \begin{figure}[ht]
 \includegraphics[width=\textwidth]{modelCompareHighNoise}
-\caption{Pseudoreward learning under white noise. The mean number of steps taken for 100 simulations. The dense maze is shown in solid lines, while the sparse maze is shown in dashed lines. }
+\caption{Pseudoreward learning under white noise with $\sigma = 0.4$ compared to Q-learning and DYNA learning. The mean number of steps taken for 100 simulations. The dense maze is shown in solid lines, while the sparse maze is shown in dashed lines.}
 \label{fig:model-compare-noise}
+\end{figure}
+
+Finally, we explore how sensitive our pseudoreward methods are to various quantities of additive white noise, $\sigma$. For the dense maze, we see that the Manhattan pseudoreward does not converge for even $\sigma = 0$, while the optimal policy pseudoreward begins to not converge with noise level somewhere between $\sigma = 0.1$ and $\sigma = 0.4$. For the sparse maze, the pattern is clear: the more white noise is added, the the longer it takes for the pseudoreward learning method to converge.
+
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{PRdenseCompare}
+\includegraphics[width=\textwidth]{PRsparseCompare}
+\caption{Pseudoreward learning for each maze under various quantities of white noise, $\sigma = 0$ to $\sigma = 0.8$.}
+\label{fig:sigma-compare}
 \end{figure}
 
 \section*{Discussion}
