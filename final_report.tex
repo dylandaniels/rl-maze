@@ -3,7 +3,7 @@
 \usepackage{amsmath}
 \usepackage{titling}
 \usepackage{graphicx}
-\usepackage[margin=1.5in]{geometry}
+\usepackage[margin=1in]{geometry}
 \usepackage{cite}
 \usepackage{subcaption}
 
@@ -25,15 +25,11 @@
 
 \maketitle
 
-\begin{abstract}
-blah blah blah we need to put stuff here.
-\end{abstract}
-
 \section*{Introduction}
 
-Reinforcement learning (RL) studies how agents behave to maximize rewards, and has been applied to model human and animal decision making for decades. In addition to providing an algorithmic framework for understanding decision making, there is also strong evidence that RL is implemented in the brain~\cite{daw2005uncertaintyl}. This field of study has identified two general classes of RL employed during decision making and implemented in the brain: model-free RL which assigns values to actions based on simple trial-and-error learning, and model-based RL which represents values of states based on an internal model of the environment. While model-free RL is computationally cheap and efficient, it fails to exploit causal regularities that may be present in the reward structure of the environment. Model-based RL, on the other hand, may lead to more optimal behavior in structured environments, but is computationally expensive.
+Reinforcement learning (RL) studies how agents behave to maximize rewards, and has been applied to model human and animal decision making for decades. In addition to providing an algorithmic framework for understanding decision making, there is also strong evidence that RL is implemented in the brain~\cite{daw2005uncertainty}. This field of study has identified two general classes of RL employed during decision making and implemented in the brain: model-free RL which assigns values to actions based on simple trial-and-error learning, and model-based RL which represents values of states based on an internal model of the environment. While model-free RL is computationally cheap and efficient, it fails to exploit causal regularities that may be present in the reward structure of the environment. Model-based RL, on the other hand, may lead to more optimal behavior in structured environments, but is computationally expensive.
 
-Usually, these two RL systems are treated as two independent systems, interacting only insofar as they compete for control of behavior~\cite{dolan2013goals}. Indeed, recent evidence suggests that humans employ both types of RL strategies: computationally-efficient but suboptimal heuristic and more optimal but computationally expensive ones~\cite{wilson2014human}, and that they tradeoff between the two~\cite{wilson2015tradeoff}. However,~\cite{sutton1998reinforcement} propose a "DYNA" architecture in which the two systems cooperate: a model-based system is used to simulate past experience in order to update the model-free representations of state-action values. While very little work has been done testing this framework on humans, recent data from human decision making is consistent with DYNA~\cite{gershman2014retrospective}. An open question for research is how these two systems may interact cooperatively~\cite{gershman2015reinforcement}, mediating the tradeoff between optimal representations of the environment and computational efficiency.
+Usually, these two RL systems are treated as two independent systems, interacting only insofar as they compete for control of behavior~\cite{dolan2013goals}. Indeed, recent evidence suggests that humans employ both types of RL strategies: computationally-efficient but suboptimal heuristic and more optimal but computationally expensive ones~\cite{wilson2014humans}, and that they tradeoff between the two~\cite{wilson2015tradeoff}. However,~\cite{sutton1998reinforcement} propose a ``DYNA'' architecture in which the two systems cooperate: a model-based system is used to simulate past experience in order to update the model-free representations of state-action values. While very little work has been done testing this framework on humans, recent data from human decision making is consistent with DYNA~\cite{gershman2014retrospective}. An open question for research is how these two systems may interact cooperatively~\cite{gershman2015reinforcement}, mediating the tradeoff between optimal representations of the environment and computational efficiency.
 
 DYNA is one means of managing cooperation between these systems, using past experience to reshape values represented by the model-free RL system. Another framework for using a model-based system to guide a model-free system is known as gamification~\cite{mcgonigal2011reality}. Gamification adds pseudorewards to decisions in a non-game context, and can be used to align myopic reward-seeking behavior with longer-term reward maximization. Essentially, it is a way to shape the reward structure of the model-free RL system so that it converges to optimal behavior more quickly, by making myopic decisions globally optimal. While a framework exists for computing optimal pseudorewards~\cite{ng1999policy}, humans might feasibly compute heuristic pseudorewards, and recent evidence shows that humans can effectively apply pseudorewards to improve decision making~\cite{lieder2016helping}.
 
@@ -96,7 +92,7 @@ While the \textit{optimal policy pseudoreward} performs well in practice, it's a
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{value_landscapes}
+\includegraphics[width=0.5\textwidth]{value_landscapes}
 \caption{The landscape of pseudorewards for each maze and each pseudoreward type. Pseudorewards are concocted so that the agent is incentivized to move towards the goal state in the lower rightmost square.}
 \label{fig:value-landscapes}
 \end{figure}
@@ -119,27 +115,30 @@ In addition, we also test the sensitivity of both pseudoreward methods to additi
 To analyze the performance of our agent in each of our two maze environments (\textit{dense} and \textit{sparse}), we ran 100 simulations of reinforcement learning for each condition. In each simulation, we allowed the agent to learn for 50 episodes, where each episode entails a series of actions beginning at the start state and terminating at the goal state; the agent automatically advanced to the next episode without reward if a maximum of 2000 steps was reached. For all of our experiments, we set the learning rate $\alpha = 0.1$, the exploratory probability $\epsilon = 0.25$, and the discount factor $\gamma = 0.95$. 
 
 \begin{figure}[ht]
-\includegraphics[width=\textwidth]{modelCompareNoNoise}
+\centering
+\includegraphics[width=0.7\textwidth]{modelCompareNoNoise}
 \caption{The mean number of steps taken for each episode are plotted above for Q-learning and 5 variants, for both the dense maze (shown in solid lines) and the sparse maze (shown in dashed lines). The means are taken over 100 simulations of 50 episodes.}
 \label{fig:model-compare}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=-0.7\textwidth]{DYNAcompare.pdf}
+\caption{The mean number of steps taken for 100 simulations of DYNA learning. The dense maze is shown in solid lines, while the sparse maze is shown in dashed lines. The convergence rate increases with the number of replays.}
+\label{fig:dyna-compare}
 \end{figure}
 
 As a first pass, we compare the DYNA architecture with $p =20$ replays with the optimal policy and Manhattan pseudoreward architectures (Figure~\ref{fig:model-compare}). For the sparse maze, shown in dashed lines, all methods converge to the optimal number of steps: 20. For the dense maze, the optimal number of steps is 24 and all methods converge except the Manhattan distance-based pseudoreward. This is because in the dense maze (shown in Figure~\ref{fig:mazes}), it is very easy for the agent to get stuck following a false pseudoreward path towards the goal: the agent keeps butting up against a wall on the lower right or lower left. For both mazes, DYNA converges more quickly than regular Q-learning, validating the hypothesis that replaying memories speeds up the learning process. We also see that the optimal policy pseudoreward converges nearly instantly to the optimal value, which is expected because the agent is incentivized to follow the optimal path from the start. When the optimal policy pseudoreward is combined with DYNA for replaying memories, it converges just as fast. For the Manhattan pseudoreward, combining with DYNA improves the convergence rate. 
 
 Next, in Figure~\ref{fig:dyna-compare} we analyze the performance of DYNA by varying the number of moves replayed at the conclusion of each episode. As the number of replays increases, the convergence rate of Q-learning increases. It is interesting to note that as a function of episodes, the dense maze appears to have a concave shape while the sparse maze has a convex shape. This means that the majority of learning happens later for the dense maze than for the sparse maze. This is probably due to the fact that it takes longer for the agent to find the optimal path in the dense maze, but once it finds it, learning happens rapidly after. 
 
-\begin{figure}[ht]
-\includegraphics[width=\textwidth]{DYNAcompare}
-\caption{The mean number of steps taken for 100 simulations of DYNA learning. The dense maze is shown in solid lines, while the sparse maze is shown in dashed lines. The convergence rate increases with the number of replays.}
-\label{fig:dyna-compare}
-\end{figure}
-
 We next compare the performance of our two pseudoreward strategies in the presence of white noise (see Figure~\ref{fig:model-compare-noise}). For the dense maze (solid lines), we see that the Manhattan pseudoreward continues to fail to converge within 50 episodes in the presence of noise; because it had not converged without noise, this is unsurprising. The optimal policy reward plus noise also fails to converge to the optimal number of steps; however, it appears to reach a type of equilibrium (at least in this time frame) at around 1000 steps. Counterintuitively, adding DYNA replaying to this strategy actually \textit{worsens} performance; the mean number of steps stays at around 1900. We believe this is occurring because the DYNA planning stage after each step is reinforcing counterproductive behavior; DYNA adds more noise to an already noisy process.
 
 For the sparse maze, adding white noise with $\sigma = 0.4$ to the pseudorewards prevents convergence to the true optimal value of 20 steps; both Manhattan and optimal policy pseudorewards seem to converge to about 200 steps. In this case, regular Q-learning and DYNA outperform noisy pseudorewards. Curiously, when DYNA replaying is combined with each of these noisy pseudorewards strategies, it drastically cuts performance--both pseudoreward strategies fail to converge and hover around 1500 steps. This is probably due to the fact that the DYNA replays are updating $Q(s,a)$ values for ``bad moves''; reinforcement learning is reinforcing the wrong thing.
 
 \begin{figure}[ht]
-\includegraphics[width=\textwidth]{modelCompareHighNoise}
+\centering
+\includegraphics[width=0.7\textwidth]{modelCompareHighNoise}
 \caption{Pseudoreward learning under white noise with $\sigma = 0.4$ compared to Q-learning and DYNA learning. The mean number of steps taken for 100 simulations. The dense maze is shown in solid lines, while the sparse maze is shown in dashed lines.}
 \label{fig:model-compare-noise}
 \end{figure}
@@ -147,8 +146,9 @@ For the sparse maze, adding white noise with $\sigma = 0.4$ to the pseudorewards
 Finally, we explore how sensitive our pseudoreward methods are to various quantities of additive white noise, $\sigma$. For the dense maze, we see that the Manhattan pseudoreward does not converge for even $\sigma = 0$, while the optimal policy pseudoreward begins to not converge with noise level somewhere between $\sigma = 0.1$ and $\sigma = 0.4$. For the sparse maze, the pattern is clear: the more white noise is added, the the longer it takes for the pseudoreward learning method to converge.
 
 \begin{figure}[ht]
-\includegraphics[width=0.9\textwidth]{PRdenseCompare}
-\includegraphics[width=0.9\textwidth]{PRsparseCompare}
+\centering
+\includegraphics[width=0.5\textwidth]{PRdenseCompare}
+\includegraphics[width=0.5\textwidth]{PRsparseCompare}
 \caption{Pseudoreward learning for each maze under various quantities of white noise, $\sigma = 0$ to $\sigma = 0.8$.}
 \label{fig:sigma-compare}
 \end{figure}
@@ -157,15 +157,13 @@ Finally, we explore how sensitive our pseudoreward methods are to various quanti
 
 Our experiments compared three different types of RL algorithms: 1) simple Q-learning, 2) DYNA RL which combines Q-learning with model-based experience replay, 3) pseudorewards which modify model-free RL using a model-based system. We also tested a hybrid of DYNA and pseudoreward learning. Our results show that DYNA outperforms Q-learning in a maze-like environment, and optimal pseudorewards lead to the fastest convergence to optimal behavior. Furthermore, when optimal pseudorewards or manhattan heuristic pseudo rewards are combined with DYNA learning, the agent performs better than with either algorithm alone. However, when these pseudorewards become sufficiently noisey--which is more plausible in the real-world-- combining them with DYNA actually deteriorates performance, leading to less convergence or no convergence. The reason for this is that DYNA essentially magnifies the noise.
 
-Researchers have for decades sought to understand how humans and even animals may construct a cognitive map versus using using simple model-free learning in maze environments~\cite{tolman1948cognitive,}. But there is little work studying how the two systems might cooperate. The algorithms we tested here could be used in a straightforward way to model the performance of humans or animals in a maze environment, in order to test which ones best match actual behavior. Furthermore, there is reason to believe that cognitive maps underlying spatial navigation, and the algorithms used to learn these maps, extent to other cognitive domains as well. Others have proposed that non-spatial maps are represented in a similar continuous space~\cite{buzsaki2013memory,tolman1948cognitive}, most famously in the case of episodic memory~\cite{o1978hippocampus}. Recent neural findings provide empirical support for this, and {behrens2015} found that cognitive maps of categories are represented in the brain using the same grid-based continuous spatial representations used for spatial navigation. This supports the fascinating hypothesis that humans may navigate through a virtual space of object representations when performing categorizations, akin to the way in which we find our way through physical space. It remains to be seen which other cognitive processes may be represented by similar space-like grids in the brain. While our maze environment ostensibly simulates spatial navigation, it's possible that it provides a strong analogy for other types of cognition as well.
+Researchers have for decades sought to understand how humans and even animals may construct a cognitive map versus using using simple model-free learning in maze environments~\cite{tolman1948cognitive}. But there is little work studying how the two systems might cooperate. The algorithms we tested here could be used in a straightforward way to model the performance of humans or animals in a maze environment, in order to test which ones best match actual behavior. Furthermore, there is reason to believe that cognitive maps underlying spatial navigation, and the algorithms used to learn these maps, extent to other cognitive domains as well. Others have proposed that non-spatial maps are represented in a similar continuous space~\cite{buzsaki2013memory,tolman1948cognitive}, most famously in the case of episodic memory~\cite{o1978hippocampus}. Recent neural findings provide empirical support for this, and {behrens2015} found that cognitive maps of categories are represented in the brain using the same grid-based continuous spatial representations used for spatial navigation. This supports the fascinating hypothesis that humans may navigate through a virtual space of object representations when performing categorizations, akin to the way in which we find our way through physical space. It remains to be seen which other cognitive processes may be represented by similar space-like grids in the brain. While our maze environment ostensibly simulates spatial navigation, it's possible that it provides a strong analogy for other types of cognition as well.
 
 Both DYNA learning and pseudorewards have recently been used as a framework for studying human learning and decision making. Evidence suggests that model-free and model-based RL systems interact in human learners~\cite{otto2013working,otto2013curse}, and that this interaction might be mediated by a DYNA architecture~\cite{gershman2014retrospective}. While the gamification framework has only recently been formalized as a framework for designing optimal incentive structures for human learners~\cite{lieder2016helping}, other findings could also be understood through the framework of pseudorewards, such as when human learners assign value to gaining information about their environment~\cite{wilson2014humans}. In none of these studies, however, has there been an explicit comparison between pseudorewards and DYNA, to test which one better models the data. Our experiments are the first data that we are aware of to explicitly compare the two.
 
 Future work should investigate how humans implement pseudorewards, and how they learn such values. Affective responses are one plausible mechanism by which pseudorewards could be instantiated. Certain emotions could be used as a means of biasing an agent to make certain deicisions, and these emotions could be either built-in through evolution, learned from experience, or both. While many affective biases are known to sway humans away from optimal decision making~\cite{kahneman1979prospect}, more recent descriptions depict the rationality of these processes~\cite{griffiths2008bayesian}. One study has examined the interaction between emotional and rational/cognitive processing in the context of moral decision-making, linking these dual processes to model-free and model-based systems~\cite{cushman2013action}. While these authors suggest that emotions form the basis for the model-free component of these systems, within the context of pseudorewards is seems plausible that emotions could themselves be used to shape a model-free decision process. Within the context of moral decision making, for example, the emotion of remorse might function as a pseudoreward to retrain instinctive responses, making the agent more likely to behave within an ethical framework. The question of how pseudorewards are instantiated under different types of decision making, and how they interact with model-free RL, is a rich topic for future work.
 
 More work should also be done to study how past experience and memories might be used to shape model-free RL, using the DYNA framework. Such work may elucidate how it is applied algorithmically or implemented biologically in humans or animals. One study provides indirect support for the implementation of DYNA in humans~\cite{gershman2014retrospective}, but this study did not compare DYNA with other potential mechanisms of cooperation between model-based and model-free RL, such as pseudorewards. While both forms of RL have proved valuable in modeling human and animal behavior, a systematic, model-comparison approach to studying alternative ways in which the systems may interact, remains under explored. Here we compared two such alternative models of this interaction. While our benchmarks use a maze setting, a next simple step would be to apply them to other decision making environments that are directly germane to particular questions of interest in cognition.
-
-\section*{References}
 
 \bibliography{final_report}{}
 \bibliographystyle{apalike}
