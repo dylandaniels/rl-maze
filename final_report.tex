@@ -49,7 +49,7 @@ blah blah blah we need to put stuff here.
 \label{fig:mazes}
 \end{figure}
 
-To explore theories about reinforcement learning in cognition, we constructed a simple two-dimensional maze game whereby an agent was tasked with learning how to reach a terminal goal state from a start state. The terminal goal state confers the agent a reward of 1 point, and resets the agent's location to the starting point (Figure something of maze). We study two different mazes: a \textit{sparse} maze and a \textit{dense} maze. The sparse maze is easier for the agent to solve, but it is also easier for the agent to get stuck in a suboptimal path. The dense maze, on the other hand, has only one clear path to the solution; as a result, we expect heuristic-based pseudorewards to often fail to find the optimal path.
+To explore theories about reinforcement learning in cognition, we constructed a simple two-dimensional maze game whereby an agent was tasked with learning how to reach a terminal goal state from a start state. The terminal goal state confers the agent a reward of 1 point, and resets the agent's location to the starting point (Figure 1). We study two different mazes: a \textit{dense} maze (Figure 1a) and a \textit{sparse} maze (Figure 1b). The sparse maze is easier for the agent to solve, but it is also easier for the agent to get stuck in a suboptimal path. The dense maze, on the other hand, has only one clear path to the solution; as a result, we expect heuristic-based pseudorewards to often fail to find the optimal path.
 
 All of our methods are based on a common model-free reinforcement learning paradigm known as Q-learning~\cite{sutton1998reinforcement}, which learns an optimal policy $\pi^*$ over time. Let $\mathcal{S}$ be the set of states and let $\mathcal{A}$ be the set of actions. For each $(s,a) \in \mathcal{S} \times \mathcal{A}$, a value $Q(s,a)$ is learned via the following algorithm. Initially all $Q(s,a)$ are zero. At each state $s$, with probability $1 - \epsilon$, the agent chooses the action $a \in \mathcal{A}$ with the highest value $Q(s,a)$. With probability $\epsilon$ it chooses an action uniformly at random ($\epsilon$ is a hyperparameter that calibrates the explore-exploit tradeoff). Then, after completing the selected action $a$, the agent moves to $s'$ and updates $Q$ by
 
@@ -58,7 +58,7 @@ Q(s,a) \leftarrow Q(s,a) + \alpha (R(s, s') + \gamma \max_{a'} Q(s', a') - Q(s,a
 \label{eq:q-learn}
 \end{equation}
 
-where $\alpha$ is the learning rate, $R_(s, s')$ is the reward received at state $s'$, and $\gamma$ is the discount factor. Q-learning will converge with probability one to the optimal policy. 
+where $\alpha$ is the learning rate, $R(s, s')$ is the reward received at state $s'$, and $\gamma$ is the discount factor on rewards. Q-learning will converge with probability one to the optimal policy. 
 
 For our maze game, each state $s$ is a square in the matrix, and each available action $a$ is selected from up the four cardinal directions which do not move the agent into a wall. 
 
@@ -97,7 +97,7 @@ For our maze environment, we use a modified Manhattan distance metric to impleme
 \begin{equation}
 F(s, s') = \gamma \Phi(s') - \Phi(s)
 \end{equation} 
-which fulfills the conditions in~\cite{ng1999policy} to be an invariant reward transformation. A comparison the pseudoreward landscape for each of the types of the pseudorewards considered is shown in Figure~\ref{fig:value-landscapes}.
+which fulfills the conditions in~\cite{ng1999policy} to be an invariant reward transformation. A comparison of the pseudoreward landscape for each of the types of the pseudorewards considered is shown in Figure~\ref{fig:value-landscapes}.
 
 In addition, we also test the sensitivity of both pseudoreward methods to additive white noise. For each pseudoreward $F(s, s')$ conferred, let
 \begin{equation}
