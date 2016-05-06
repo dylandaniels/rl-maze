@@ -4,7 +4,7 @@ SAVE = true;
 
 plotTypes = {'models','modelsLowNoise','DYNA','PRdense','PRsparse'};
 
-for i = 1:length(plotTypes)
+for i = 2%1:length(plotTypes)
     
 plotType = plotTypes{i};
 
@@ -35,7 +35,7 @@ switch plotType
         load(['100sim_DYNAreplay-0-1-5-10-20-40-80_dense'])
         dat1 = simulation_data.steps(:,:,[1 5]);
         load(['100sim_PRoptSigma-0-1-2-4-8_dense'])
-        dat2 = simulation_data.steps(:,:,4);
+        dat2 = simulation_data.steps(:,:,1);
         load('100sim_PRmanSigma-0-1-4-8_dense')
         dat3 = simulation_data.steps(:,:,3);
         load('100sim_PRopt0+DYNA20_dense')
