@@ -60,6 +60,8 @@ Q(s,a) \leftarrow Q(s,a) + \alpha (R(s, s') + \gamma \max_{a'} Q(s', a') - Q(s,a
 
 where $\alpha$ is the learning rate, $R_(s, s')$ is the reward received at state $s'$, and $\gamma$ is the discount factor. Q-learning will converge with probability one to the optimal policy. 
 
+For our maze game, each state $s$ is a square in the matrix, and each available action $a$ is selected from up the four cardinal directions which do not move the agent into a wall. 
+
 \subsection*{DYNA Planning}
 
 Using the DYNA framework described in~\cite{sutton1998reinforcement}, we can improve upon the naive Q-learning algorithm by recalling a random set of past moves after each step. From a cognitive science perspective, this type of optimization is interesting because it is as if we are replaying past memories. In other words, is it cognitively advantageous to think about past experiences, and as a result, learn more from them? 
@@ -137,8 +139,8 @@ For the sparse maze, adding white noise with $\sigma = 0.4$ to the pseudorewards
 Finally, we explore how sensitive our pseudoreward methods are to various quantities of additive white noise, $\sigma$. For the dense maze, we see that the Manhattan pseudoreward does not converge for even $\sigma = 0$, while the optimal policy pseudoreward begins to not converge with noise level somewhere between $\sigma = 0.1$ and $\sigma = 0.4$. For the sparse maze, the pattern is clear: the more white noise is added, the the longer it takes for the pseudoreward learning method to converge.
 
 \begin{figure}[ht]
-\includegraphics[width=\textwidth]{PRdenseCompare}
-\includegraphics[width=\textwidth]{PRsparseCompare}
+\includegraphics[width=0.9\textwidth]{PRdenseCompare}
+\includegraphics[width=0.9\textwidth]{PRsparseCompare}
 \caption{Pseudoreward learning for each maze under various quantities of white noise, $\sigma = 0$ to $\sigma = 0.8$.}
 \label{fig:sigma-compare}
 \end{figure}
