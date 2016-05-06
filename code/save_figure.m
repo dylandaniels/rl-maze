@@ -17,4 +17,4 @@ if ~exist(directory,'dir')
 end
 
 saveas(h,[directory,name,'.png'])
-% saveFigurePdf(h,[directory,name])
+saveFigurePdf(h,[directory,name])

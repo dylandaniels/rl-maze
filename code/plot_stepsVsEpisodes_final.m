@@ -37,7 +37,7 @@ switch plotType
         load(['100sim_PRoptSigma-0-1-2-4-8_dense'])
         dat2 = simulation_data.steps(:,:,1);
         load('100sim_PRmanSigma-0-1-4-8_dense')
-        dat3 = simulation_data.steps(:,:,3);
+        dat3 = simulation_data.steps(:,:,1);
         load('100sim_PRopt0+DYNA20_dense')
         dat4 = simulation_data.steps;
         load('100sim_PRman0+DYNA20_dense')
@@ -45,9 +45,9 @@ switch plotType
         load(['100sim_DYNAreplay-0-1-5-10-20-40-80_sparse'])
         dat6 = simulation_data.steps(:,:,[1 5]);
         load(['100sim_PRoptSigma-0-1-2-4-8_sparse'])
-        dat7 = simulation_data.steps(:,:,4);
+        dat7 = simulation_data.steps(:,:,1);
         load('100sim_PRmanSigma-0-1-4-8_sparse')
-        dat8 = simulation_data.steps(:,:,3);
+        dat8 = simulation_data.steps(:,:,1);
         load('100sim_PRopt0+DYNA20_sparse')
         dat9 = simulation_data.steps;
         load('100sim_PRman0+DYNA20_sparse')
