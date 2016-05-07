@@ -7,6 +7,8 @@
 \usepackage{cite}
 \usepackage{subcaption}
 
+\setlength{\droptitle}{-5em} 
+
 
 \graphicspath{{figures/paper/final/}{figures/paper/preliminary/}}
 
@@ -121,9 +123,9 @@ To analyze the performance of our agent in each of our two maze environments (\t
 \label{fig:model-compare}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[!ht]
 \centering
-\includegraphics[width=-0.7\textwidth]{DYNAcompare.pdf}
+\includegraphics[width=0.7\textwidth]{DYNAcompare.png}
 \caption{The mean number of steps taken for 100 simulations of DYNA learning. The dense maze is shown in solid lines, while the sparse maze is shown in dashed lines. The convergence rate increases with the number of replays.}
 \label{fig:dyna-compare}
 \end{figure}
@@ -145,10 +147,18 @@ For the sparse maze, adding white noise with $\sigma = 0.4$ to the pseudorewards
 
 Finally, we explore how sensitive our pseudoreward methods are to various quantities of additive white noise, $\sigma$. For the dense maze, we see that the Manhattan pseudoreward does not converge for even $\sigma = 0$, while the optimal policy pseudoreward begins to not converge with noise level somewhere between $\sigma = 0.1$ and $\sigma = 0.4$. For the sparse maze, the pattern is clear: the more white noise is added, the the longer it takes for the pseudoreward learning method to converge.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth]{PRdenseCompare}
-\includegraphics[width=0.5\textwidth]{PRsparseCompare}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{PRdenseCompare}
+  \caption{The dense maze.}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{PRsparseCompare}
+  \caption{The sparse maze.}
+\end{subfigure}
 \caption{Pseudoreward learning for each maze under various quantities of white noise, $\sigma = 0$ to $\sigma = 0.8$.}
 \label{fig:sigma-compare}
 \end{figure}
